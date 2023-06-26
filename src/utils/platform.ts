@@ -1,16 +1,31 @@
-import { Platform } from "react-native";
-import { screenHeight, screenWidth } from "./helper";
+import { Platform, TextStyle } from "react-native";
+import { height, width } from "./helper";
 
 const guidelineBaseWidth = 375;
 const guidelineBaseHeight = 812;
 
-const horizontalScale = (size: number) =>
-  (screenWidth / guidelineBaseWidth) * size;
-const verticalScale = (size: number) =>
-  (screenHeight / guidelineBaseHeight) * size;
-const moderateScale = (size: number, factor = 0.5) =>
-  size + (horizontalScale(size) - size) * factor;
+const [shortDimension, longDimension] =
+  width < height ? [width, height] : [height, width];
 
-export { horizontalScale, verticalScale, moderateScale };
+export const horizontalScale = (size: number) =>
+  (shortDimension / guidelineBaseWidth) * size;
+export const verticalScale = (size: number) =>
+  (longDimension / guidelineBaseHeight) * size;
+export const moderateScale = (size: number, factor = 0.5) =>
+  size + (horizontalScale(size) - size) * factor;
+export const moderateVerticalScale = (size: number, factor = 0.5) =>
+  size + (verticalScale(size) - size) * factor;
 
 export const isIOS = Platform.OS === "ios";
+
+export function fontSizing(size: number, height: number): TextStyle {
+  return {
+    fontSize: isIOS ? hs(size) : hs(size) - 1,
+    lineHeight: vs(height),
+  };
+}
+
+export const hs = horizontalScale;
+export const vs = verticalScale;
+export const ms = moderateScale;
+export const mvs = moderateVerticalScale;

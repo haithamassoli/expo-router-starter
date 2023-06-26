@@ -1,10 +1,10 @@
-import { horizontalScale } from "@utils/platform";
+import { ms } from "@utils/platform";
 
 const Border = {
   none: 0,
-  s: horizontalScale(4),
-  m: horizontalScale(10),
-  l: horizontalScale(25),
-  xl: horizontalScale(5),
+  s: ms(4),
+  m: ms(10),
+  l: ms(25),
+  xl: ms(5),
 };
 export default Border;

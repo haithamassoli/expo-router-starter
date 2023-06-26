@@ -1,18 +1,20 @@
-import { horizontalScale } from "@utils/platform";
+import { hs, ms } from "@utils/platform";
 
 export const FontSize = {
-  xs: horizontalScale(10),
-  s: horizontalScale(12),
-  m: horizontalScale(14),
-  l: horizontalScale(16),
-  xl: horizontalScale(18),
-  xxl: horizontalScale(20),
+  xs: ms(4),
+  s: ms(8),
+  m: ms(16),
+  l: ms(24),
+  xl: ms(32),
+  "2xl": ms(40),
+  "3xs": ms(48),
+  "4xs": ms(56),
 };
 
 export const IconSize = {
-  xs: horizontalScale(12),
-  s: horizontalScale(16),
-  m: horizontalScale(24),
-  l: horizontalScale(32),
-  xl: horizontalScale(40),
+  xs: hs(12),
+  s: hs(16),
+  m: hs(24),
+  l: hs(32),
+  xl: hs(40),
 };

@@ -2,8 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import NetInfo from "@react-native-community/netinfo";
 import { Dimensions } from "react-native";
 
-export const screenWidth = Dimensions.get("window").width;
-export const screenHeight = Dimensions.get("window").height;
+export const { width, height } = Dimensions.get("window");
 
 export const getDataFromStorage = async (key: string) => {
   try {
