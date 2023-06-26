@@ -58,31 +58,31 @@ const theme = createTheme({
   textVariants: {
     DisplayLarge: {
       fontFamily: "CairoRegular",
-      ...fontSizing(FontSize["4xs"], 64),
+      ...fontSizing(FontSize["5xl"], 64),
       color: "text",
     },
     DisplayMedium: {
-      ...fontSizing(FontSize["3xs"], 52),
+      ...fontSizing(FontSize["4xl"], 52),
       fontFamily: "CairoBold",
       color: "text",
     },
     DisplaySmall: {
-      ...fontSizing(FontSize["2xl"], 44),
+      ...fontSizing(FontSize["3xl"], 44),
       fontFamily: "CairoRegular",
       color: "text",
     },
     HeadlineLarge: {
-      ...fontSizing(FontSize.xl, 40),
+      ...fontSizing(FontSize["2xl"], 40),
       fontFamily: "CairoBold",
       color: "text",
     },
     HeadlineMedium: {
-      ...fontSizing(FontSize.l, 36),
+      ...fontSizing(FontSize.xl, 36),
       fontFamily: "CairoRegular",
       color: "text",
     },
     HeadlineSmall: {
-      ...fontSizing(FontSize.m, 32),
+      ...fontSizing(FontSize.l, 32),
       fontFamily: "CairoRegular",
       color: "text",
     },
@@ -98,27 +98,9 @@ const theme = createTheme({
       color: "text",
     },
     TitleSmall: {
-      ...fontSizing(FontSize.s, 20),
+      ...fontSizing(FontSize["2xs"], 20),
       fontFamily: "CairoMedium",
       letterSpacing: 0.1,
-      color: "text",
-    },
-    LabelLarge: {
-      ...fontSizing(FontSize.s, 20),
-      fontFamily: "CairoMedium",
-      letterSpacing: 0.1,
-      color: "text",
-    },
-    LabelMedium: {
-      ...fontSizing(FontSize.xs, 16),
-      fontFamily: "CairoMedium",
-      letterSpacing: 0.5,
-      color: "text",
-    },
-    LabelSmall: {
-      ...fontSizing(FontSize.xs, 16),
-      fontFamily: "CairoMedium",
-      letterSpacing: 0.5,
       color: "text",
     },
     BodyLarge: {
@@ -128,15 +110,33 @@ const theme = createTheme({
       color: "text",
     },
     BodyMedium: {
-      ...fontSizing(FontSize.xs, 20),
+      ...fontSizing(FontSize["2xs"], 20),
       fontFamily: "CairoRegular",
       letterSpacing: 0.25,
       color: "text",
     },
     BodySmall: {
-      ...fontSizing(FontSize.xs, 16),
+      ...fontSizing(FontSize["3xs"], 16),
       fontFamily: "CairoRegular",
       letterSpacing: 0.4,
+      color: "text",
+    },
+    LabelLarge: {
+      ...fontSizing(FontSize["2xs"], 20),
+      fontFamily: "CairoMedium",
+      letterSpacing: 0.1,
+      color: "text",
+    },
+    LabelMedium: {
+      ...fontSizing(FontSize["3xs"], 16),
+      fontFamily: "CairoMedium",
+      letterSpacing: 0.5,
+      color: "text",
+    },
+    LabelSmall: {
+      ...fontSizing(FontSize["4xs"], 16),
+      fontFamily: "CairoMedium",
+      letterSpacing: 0.5,
       color: "text",
     },
   },
@@ -166,5 +166,5 @@ export const darkTheme: Theme = {
 
 export type Theme = typeof theme;
 export const Box = createBox<Theme>();
-export const Text = createText<Theme>();
+export const ReText = createText<Theme>();
 export default theme;

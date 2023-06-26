@@ -19,7 +19,7 @@ import {
   TextInput as PaperTextInput,
 } from "react-native-paper";
 import { ThemeProp } from "react-native-paper/lib/typescript/src/types";
-import theme, { Box, Text as RestyleText, darkTheme } from "@styles/theme";
+import theme, { Box, ReText, darkTheme } from "@styles/theme";
 import Colors from "@styles/colors";
 import {
   I18nManager,
@@ -66,8 +66,8 @@ export default function RootLayout() {
 
   Text.defaultProps = Text.defaultProps || {};
   Text.defaultProps.allowFontScaling = false;
-  RestyleText.defaultProps = RestyleText.defaultProps || {};
-  RestyleText.defaultProps.allowFontScaling = false;
+  ReText.defaultProps = ReText.defaultProps || {};
+  ReText.defaultProps.allowFontScaling = false;
   PaperText.defaultProps = PaperText.defaultProps || {};
   PaperText.defaultProps.allowFontScaling = false;
 
