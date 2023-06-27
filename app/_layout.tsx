@@ -1,9 +1,8 @@
 // @ts-nocheck
 import "react-native-gesture-handler";
-import { Slot } from "expo-router";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ThemeProvider } from "@shopify/restyle";
+import { ThemeProvider as ReThemeProvider } from "@shopify/restyle";
 import { StatusBar } from "expo-status-bar";
 import { useStore } from "@zustand/store";
 import { reloadAsync } from "expo-updates";
@@ -14,6 +13,7 @@ import { FlashList } from "@shopify/flash-list";
 import { PaperProvider, MD3LightTheme, TextInput } from "react-native-paper";
 import { useCallback, useEffect, useState } from "react";
 import { MaterialDark, MaterialLight } from "@styles/material";
+import { ThemeProvider } from "@react-navigation/native";
 import {
   Text as PaperText,
   TextInput as PaperTextInput,
@@ -28,6 +28,12 @@ import {
   Text,
   UIManager,
 } from "react-native";
+import { Slot, Stack } from "expo-router";
+import { Drawer } from "expo-router/drawer";
+import {
+  DarkNavigationColors,
+  LightNavigationColors,
+} from "@styles/navigation";
 
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -139,7 +145,7 @@ export default function RootLayout() {
   };
 
   return (
-    <ThemeProvider theme={isDark ? darkTheme : theme}>
+    <ReThemeProvider theme={isDark ? darkTheme : theme}>
       <StatusBar
         style={isDark ? "light" : "dark"}
         backgroundColor={
@@ -148,11 +154,22 @@ export default function RootLayout() {
       />
       <QueryClientProvider client={queryClient}>
         <PaperProvider theme={materialTheme}>
-          <Box flex={1} onLayout={onLayoutRootView}>
-            <Slot />
-          </Box>
+          <ThemeProvider
+            value={isDark ? DarkNavigationColors : LightNavigationColors}
+          >
+            <Box flex={1} onLayout={onLayoutRootView}>
+              <Drawer>
+                <Drawer.Screen name="(index)" options={{ title: "Home" }} />
+                <Drawer.Screen name="(search)" options={{ title: "Search" }} />
+                <Drawer.Screen
+                  name="(profile)"
+                  options={{ title: "Profile" }}
+                />
+              </Drawer>
+            </Box>
+          </ThemeProvider>
         </PaperProvider>
       </QueryClientProvider>
-    </ThemeProvider>
+    </ReThemeProvider>
   );
 }

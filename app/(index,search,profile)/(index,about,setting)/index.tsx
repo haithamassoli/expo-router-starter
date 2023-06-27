@@ -1,12 +1,12 @@
 import { View, Text } from "react-native";
 import React from "react";
 
-const Root = () => {
+const HomeTab = () => {
   return (
     <View>
-      <Text>Root</Text>
+      <Text>Home</Text>
     </View>
   );
 };
 
-export default Root;
+export default HomeTab;

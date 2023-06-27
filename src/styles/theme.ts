@@ -57,7 +57,7 @@ const theme = createTheme({
   breakpoints: {},
   textVariants: {
     DisplayLarge: {
-      fontFamily: "CairoRegular",
+      fontFamily: "CairoReg",
       ...fontSizing(FontSize["5xl"], 64),
       color: "text",
     },
@@ -68,7 +68,7 @@ const theme = createTheme({
     },
     DisplaySmall: {
       ...fontSizing(FontSize["3xl"], 44),
-      fontFamily: "CairoRegular",
+      fontFamily: "CairoReg",
       color: "text",
     },
     HeadlineLarge: {
@@ -78,12 +78,12 @@ const theme = createTheme({
     },
     HeadlineMedium: {
       ...fontSizing(FontSize.xl, 36),
-      fontFamily: "CairoRegular",
+      fontFamily: "CairoReg",
       color: "text",
     },
     HeadlineSmall: {
       ...fontSizing(FontSize.l, 32),
-      fontFamily: "CairoRegular",
+      fontFamily: "CairoReg",
       color: "text",
     },
     TitleLarge: {
@@ -105,19 +105,19 @@ const theme = createTheme({
     },
     BodyLarge: {
       ...fontSizing(FontSize.xs, 24),
-      fontFamily: "CairoRegular",
+      fontFamily: "CairoReg",
       letterSpacing: 0.5,
       color: "text",
     },
     BodyMedium: {
       ...fontSizing(FontSize["2xs"], 20),
-      fontFamily: "CairoRegular",
+      fontFamily: "CairoReg",
       letterSpacing: 0.25,
       color: "text",
     },
     BodySmall: {
       ...fontSizing(FontSize["3xs"], 16),
-      fontFamily: "CairoRegular",
+      fontFamily: "CairoReg",
       letterSpacing: 0.4,
       color: "text",
     },
