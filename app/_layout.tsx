@@ -7,12 +7,16 @@ import { StatusBar } from "expo-status-bar";
 import { useStore } from "@zustand/store";
 import { reloadAsync } from "expo-updates";
 import { useFonts } from "expo-font";
-import * as SplashScreen from "expo-splash-screen";
 import * as Notifications from "expo-notifications";
 import { FlashList } from "@shopify/flash-list";
-import { PaperProvider, MD3LightTheme, TextInput } from "react-native-paper";
+import {
+  PaperProvider,
+  MD3LightTheme,
+  TextInput,
+  configureFonts,
+} from "react-native-paper";
 import { useCallback, useEffect, useState } from "react";
-import { MaterialDark, MaterialLight } from "@styles/material";
+import { MaterialDark, MaterialLight, fontConfig } from "@styles/material";
 import { ThemeProvider } from "@react-navigation/native";
 import {
   Text as PaperText,
@@ -28,12 +32,12 @@ import {
   Text,
   UIManager,
 } from "react-native";
-import { Slot, Stack } from "expo-router";
-import { Drawer } from "expo-router/drawer";
+import { Stack, SplashScreen, useSegments, useRouter } from "expo-router";
 import {
   DarkNavigationColors,
   LightNavigationColors,
 } from "@styles/navigation";
+import { getDataFromStorage } from "@utils/helper";
 
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -62,7 +66,39 @@ const queryClient = new QueryClient({
   },
 });
 
+export const unstable_settings = {
+  // Ensure any route can link back to `/`
+  initialRouteName: "(tabs)",
+};
+
 SplashScreen.preventAutoHideAsync();
+
+const forceRTL = async () => {
+  if (!I18nManager.isRTL) {
+    try {
+      I18nManager.allowRTL(true);
+      I18nManager.forceRTL(true);
+      await reloadAsync();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+};
+
+const getTheme = async () => {
+  const darkMode = await getDataFromStorage("isDark");
+  if (darkMode === null) {
+    useStore.setState({ isDark: false });
+  } else {
+    useStore.setState({ isDark: darkMode });
+  }
+};
+
+const getUserFromStorage = async () => {
+  const user = await getDataFromStorage("user");
+  if (user) useStore.setState({ user });
+  console.log("user is:", user);
+};
 
 export default function RootLayout() {
   TextInput.defaultProps = TextInput.defaultProps || {};
@@ -90,22 +126,16 @@ export default function RootLayout() {
   FlashList.defaultProps.showsVerticalScrollIndicator = false;
   FlashList.defaultProps.showsHorizontalScrollIndicator = false;
 
+  const segments = useSegments();
+  const router = useRouter();
+
   const [isFirstTime, setIsFirstTime] = useState(false);
-  const isDark = useStore((state) => state.isDark);
+  const { isDark, user } = useStore((state) => state);
 
   useEffect(() => {
-    const forceRTL = async () => {
-      if (!I18nManager.isRTL) {
-        try {
-          I18nManager.allowRTL(true);
-          I18nManager.forceRTL(true);
-          await reloadAsync();
-        } catch (error) {
-          console.log(error);
-        }
-      }
-    };
     forceRTL();
+    getUserFromStorage();
+    getTheme();
     // const firstTime = async () => {
     //   const firstTime = await getDataFromStorage("firstTime");
     //   if (firstTime === null) {
@@ -114,6 +144,16 @@ export default function RootLayout() {
     // };
     // firstTime();
   }, []);
+
+  useEffect(() => {
+    const inAuthGroup = segments.includes("profile");
+    if (!user && inAuthGroup) {
+      router.replace("/sign-in");
+    } else if (user && segments[0] === "(auth)") {
+      router.replace("/");
+    }
+    console.log(user, segments);
+  }, [user, segments]);
 
   const [fontsLoaded] = useFonts({
     CairoReg: require("@assets/fonts/Cairo-Reg.ttf"),
@@ -124,9 +164,9 @@ export default function RootLayout() {
     SahabahBold: require("@assets/fonts/DG-Sahabah-Bold.ttf"),
     SahabahReg: require("@assets/fonts/DG-Sahabah-Reg.ttf"),
   });
-  const onLayoutRootView = useCallback(async () => {
+  const onLayoutRootView = useCallback(() => {
     if (fontsLoaded) {
-      await SplashScreen.hideAsync();
+      SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
 
@@ -142,34 +182,39 @@ export default function RootLayout() {
     colors: isDark
       ? { ...MD3LightTheme.colors, ...MaterialDark }
       : { ...MD3LightTheme.colors, ...MaterialLight },
+    fonts: configureFonts({ config: fontConfig }),
   };
 
   return (
-    <ReThemeProvider theme={isDark ? darkTheme : theme}>
-      <StatusBar
-        style={isDark ? "light" : "dark"}
-        backgroundColor={
-          isDark ? Colors.darkBackground : Colors.lightBackground
-        }
-      />
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <ReThemeProvider theme={isDark ? darkTheme : theme}>
+        <StatusBar
+          style={isDark ? "light" : "dark"}
+          backgroundColor={
+            isDark ? Colors.darkBackground : Colors.lightBackground
+          }
+        />
         <PaperProvider theme={materialTheme}>
           <ThemeProvider
             value={isDark ? DarkNavigationColors : LightNavigationColors}
           >
             <Box flex={1} onLayout={onLayoutRootView}>
-              <Drawer>
-                <Drawer.Screen name="(index)" options={{ title: "Home" }} />
-                <Drawer.Screen name="(search)" options={{ title: "Search" }} />
-                <Drawer.Screen
-                  name="(profile)"
-                  options={{ title: "Profile" }}
+              <Stack
+                screenOptions={{
+                  headerShown: false,
+                }}
+              >
+                <Stack.Screen
+                  name="modal"
+                  options={{
+                    presentation: "modal",
+                  }}
                 />
-              </Drawer>
+              </Stack>
             </Box>
           </ThemeProvider>
         </PaperProvider>
-      </QueryClientProvider>
-    </ReThemeProvider>
+      </ReThemeProvider>
+    </QueryClientProvider>
   );
 }

@@ -1,3 +1,5 @@
+// https://callstack.github.io/react-native-paper/docs/guides/theming#creating-dynamic-theme-colors
+
 export const MaterialLight = {
   primary: "rgb(0, 109, 55)",
   onPrimary: "rgb(255, 255, 255)",
@@ -82,4 +84,67 @@ export const MaterialDark = {
   surfaceDisabled: "rgba(226, 227, 222, 0.12)",
   onSurfaceDisabled: "rgba(226, 227, 222, 0.38)",
   backdrop: "rgba(43, 50, 43, 0.4)",
+};
+
+export const fontConfig = {
+  labelLarge: {
+    fontFamily: "CairoBold",
+    lineHeight: 26,
+  },
+  labelMedium: {
+    fontFamily: "CairoMedium",
+    lineHeight: 26,
+  },
+  labelSmall: {
+    fontFamily: "CairoReg",
+    lineHeight: 26,
+  },
+  bodyLarge: {
+    fontFamily: "CairoBold",
+    lineHeight: 26,
+  },
+  bodyMedium: {
+    fontFamily: "CairoMedium",
+    lineHeight: 26,
+  },
+  bodySmall: {
+    fontFamily: "CairoReg",
+    lineHeight: 26,
+  },
+  DisplayLarge: {
+    fontFamily: "CairoBold",
+    lineHeight: 26,
+  },
+  DisplayMedium: {
+    fontFamily: "CairoMedium",
+    lineHeight: 26,
+  },
+  DisplaySmall: {
+    fontFamily: "CairoReg",
+    lineHeight: 26,
+  },
+  titleSmall: {
+    fontFamily: "CairoBold",
+    lineHeight: 26,
+  },
+  titleMedium: {
+    fontFamily: "CairoMedium",
+    lineHeight: 26,
+  },
+  titleLarge: {
+    fontFamily: "CairoReg",
+    lineHeight: 26,
+  },
+  headlineSmall: {
+    fontFamily: "CairoBold",
+    lineHeight: 26,
+  },
+  headlineMedium: {
+    fontFamily: "CairoMedium",
+    lineHeight: 26,
+  },
+  headlineLarge: {
+    fontFamily: "CairoReg",
+    lineHeight: 26,
+  },
 };
