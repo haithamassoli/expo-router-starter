@@ -1,6 +1,12 @@
 import { create } from "zustand";
-import { createThemeSlice, ThemeState } from "./themeSlice";
+import { createThemeSlice, IThemeState } from "./themeSlice";
+import { createSnackbarSlice, ISnackbarState } from "./snackbarSlice";
+import { createAuthSlice, IAuthState } from "./authSlice";
 
-export const useStore = create<ThemeState>()((...a) => ({
+interface IStore extends IAuthState, IThemeState, ISnackbarState {}
+
+export const useStore = create<IStore>()((...a) => ({
   ...createThemeSlice(...a),
+  ...createAuthSlice(...a),
+  ...createSnackbarSlice(...a),
 }));
